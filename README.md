@@ -1,16 +1,111 @@
-# React + Vite
+# 🚀 GoNext — Smart Nearby Places Recommender
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+GoNext is a smart nearby places recommendation web application that suggests places based on user mood, preferences, and location.
+It provides distance-based filtering, rating-based sorting, and an interactive UI for a seamless experience.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🌟 Features
 
-## React Compiler
+* 🔍 Mood-based place recommendations (Work, Date, Quick Bite, Budget)
+* 📍 Distance calculation from user location
+* ⭐ Rating-based filtering & sorting
+* 🗺️ Map integration for visual exploration
+* ❤️ Favorites management
+* 🔐 Authentication system (Context-based state management)
+* 🎨 Responsive UI built with Tailwind CSS
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+---
 
-## Expanding the ESLint configuration
+## 🛠️ Tech Stack
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+**Frontend**
+
+* React (Vite)
+* Tailwind CSS
+* JavaScript (ES6+)
+
+**State Management**
+
+* React Context API
+* Custom Hooks
+
+**Utilities**
+
+* Distance calculation logic
+* Filter & sorting algorithms
+
+---
+
+## 📁 Project Structure
+
+```
+GoNext/
+│
+├── public/
+├── src/
+│   ├── components/
+│   ├── pages/
+│   ├── context/
+│   ├── hooks/
+│   ├── utils/
+│   └── assets/
+│
+├── index.html
+├── package.json
+└── vite.config.js
+```
+
+---
+
+## 🚀 Getting Started
+
+### 1️⃣ Clone the Repository
+
+```bash
+git clone https://github.com/jaicod11/GoNext.git
+cd GoNext
+```
+
+### 2️⃣ Install Dependencies
+
+```bash
+npm install
+```
+
+### 3️⃣ Run Development Server
+
+```bash
+npm run dev
+```
+
+App will run at:
+
+```
+http://localhost:5173
+```
+
+---
+
+## 🎯 Future Improvements
+
+* Backend API integration
+* Real-time location-based services
+* User profile dashboard
+* Deployment with CI/CD
+* Performance optimization
+
+---
+
+## 👨‍💻 Author
+
+**Jaideep Kundu**
+Frontend Developer | React Enthusiast
+
+---
+
+## 📌 Project Status
+
+🟢 Active Development
+
+This project is continuously being improved with new features and enhancements.
