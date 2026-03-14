@@ -127,7 +127,7 @@ export default function CalendarModal({ onClose }) {
                       )}
                     </div>
                     <button
-                      onClick={() => deleteEvent(event.id)}
+                      onClick={() => deleteEvent(event._id)}
                       className="text-slate-600 hover:text-red-400 transition-colors text-sm"
                     >
                       🗑️

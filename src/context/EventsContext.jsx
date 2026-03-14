@@ -1,4 +1,5 @@
 import { createContext, useContext, useState, useEffect } from 'react';
+import api from '../services/api';
 
 const EventsContext = createContext(null);
 
@@ -40,22 +41,25 @@ export function EventsProvider({ children }) {
   const [todayNotification, setTodayNotification] = useState(null);
 
   useEffect(() => {
-    const stored = localStorage.getItem('gonext_events');
-    if (stored) setEvents(JSON.parse(stored));
+    fetchEvents();
   }, []);
 
   useEffect(() => {
-    localStorage.setItem('gonext_events', JSON.stringify(events));
-  }, [events]);
-
-  // Check for today's events on mount and daily
-  useEffect(() => {
     checkTodayEvents();
-    const interval = setInterval(checkTodayEvents, 60000); // Check every minute
+    const interval = setInterval(checkTodayEvents, 60000);
     return () => clearInterval(interval);
   }, [events]);
 
-  const checkTodayEvents = () => {
+  const fetchEvents = async () => {
+    try {
+      const { data } = await api.get('/events');
+      setEvents(data);
+    } catch (error) {
+      console.error('Error fetching events:', error);
+    }
+  };
+
+  const checkTodayEvents = async () => {
     const today = new Date().toISOString().split('T')[0];
     const todayEvents = events.filter(e => e.date === today && !e.notified);
 
@@ -69,26 +73,35 @@ export function EventsProvider({ children }) {
         show: true
       });
 
-      // Mark as notified
-      setEvents(prev => prev.map(e => 
-        e.id === event.id ? { ...e, notified: true } : e
-      ));
+      // Mark as notified in backend
+      try {
+        await api.patch(`/events/${event._id}`, { notified: true });
+        setEvents(prev => prev.map(e => 
+          e._id === event._id ? { ...e, notified: true } : e
+        ));
+      } catch (error) {
+        console.error('Error marking event as notified:', error);
+      }
     }
   };
 
-  const addEvent = (event) => {
-    const newEvent = {
-      ...event,
-      id: Date.now(),
-      createdAt: new Date().toISOString(),
-      notified: false
-    };
-    setEvents(prev => [...prev, newEvent]);
-    return newEvent;
+  const addEvent = async (event) => {
+    try {
+      const { data } = await api.post('/events', event);
+      setEvents(prev => [...prev, data]);
+      return data;
+    } catch (error) {
+      console.error('Error adding event:', error);
+    }
   };
 
-  const deleteEvent = (eventId) => {
-    setEvents(prev => prev.filter(e => e.id !== eventId));
+  const deleteEvent = async (eventId) => {
+    try {
+      await api.delete(`/events/${eventId}`);
+      setEvents(prev => prev.filter(e => e._id !== eventId));
+    } catch (error) {
+      console.error('Error deleting event:', error);
+    }
   };
 
   const dismissNotification = () => {
