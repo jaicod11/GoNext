@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 
 export default function LoginPage() {
-  const [tab, setTab] = useState('login'); // 'login' | 'signup'
+  const [tab, setTab] = useState('login');
   const [form, setForm] = useState({ name: '', email: '', password: '' });
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
@@ -20,7 +20,7 @@ export default function LoginPage() {
     setLoading(true);
     setError('');
 
-    await new Promise(r => setTimeout(r, 600)); // simulate loading
+    await new Promise(r => setTimeout(r, 600));
 
     let result;
     if (tab === 'login') {
@@ -40,12 +40,19 @@ export default function LoginPage() {
       {/* ── LEFT BRANDING PANEL ── */}
       <div className="hidden lg:flex w-[55%] relative flex-col items-center justify-center overflow-hidden">
 
-        {/* Animated background orbs */}
+        {/* Animated background with blurred map effect */}
         <div className="absolute inset-0">
+          {/* Simulated blurred city map background */}
+          <div className="absolute inset-0 opacity-30"
+            style={{ 
+              backgroundImage: 'radial-gradient(circle at 20% 30%, rgba(124, 58, 237, 0.3) 0%, transparent 40%), radial-gradient(circle at 80% 70%, rgba(59, 130, 246, 0.25) 0%, transparent 40%), radial-gradient(circle at 50% 50%, rgba(168, 85, 247, 0.2) 0%, transparent 50%)',
+              filter: 'blur(60px)'
+            }} 
+          />
           <div className="orb-1 absolute top-[15%] left-[20%] w-96 h-96 rounded-full bg-violet-600/20 blur-[80px]" />
           <div className="orb-2 absolute bottom-[20%] right-[15%] w-80 h-80 rounded-full bg-indigo-500/20 blur-[80px]" />
           <div className="orb-3 absolute top-[50%] left-[50%] w-64 h-64 rounded-full bg-purple-700/15 blur-[60px]" />
-          {/* Grid lines */}
+          {/* Subtle grid pattern */}
           <div className="absolute inset-0 opacity-[0.04]"
             style={{ backgroundImage: 'linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)', backgroundSize: '60px 60px' }} />
         </div>
@@ -59,13 +66,15 @@ export default function LoginPage() {
             <span className="font-display text-2xl font-bold text-white tracking-tight">GoNext</span>
           </div>
 
-          <h1 className="font-display text-5xl font-bold leading-tight mb-6">
-            <span className="text-white">Discover places</span><br />
-            <span className="shimmer-text">that match your mood.</span>
+          {/* ✅ NEW: Strong hero headline */}
+          <h1 className="font-display text-5xl font-bold leading-tight mb-4">
+            <span className="text-white">Find the Perfect Place</span><br />
+            <span className="shimmer-text">Based on Your Mood</span>
           </h1>
+          
+          {/* ✅ NEW: Subtext tagline */}
           <p className="text-slate-400 text-lg leading-relaxed mb-12">
-            From quiet cafés for deep work to romantic spots for date night —
-            GoNext finds your perfect place, every time.
+            Work. Date. Chill. Quick Bite. Budget Friendly.
           </p>
 
           {/* Feature pills */}
@@ -88,7 +97,6 @@ export default function LoginPage() {
 
       {/* ── RIGHT FORM PANEL ── */}
       <div className="flex-1 flex items-center justify-center p-8 relative">
-        {/* Subtle background for mobile */}
         <div className="absolute inset-0 lg:hidden">
           <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-surface-800 to-surface-900" />
           <div className="orb-1 absolute top-[10%] right-[10%] w-64 h-64 rounded-full bg-violet-600/15 blur-[60px]" />
@@ -97,7 +105,9 @@ export default function LoginPage() {
         <div className="relative w-full max-w-md anim-scale-in">
           {/* Mobile logo */}
           <div className="flex items-center gap-2 mb-8 lg:hidden">
-            <div className="w-8 h-8 rounded-lg bg-brand-600 flex items-center justify-center text-lg shadow-glow-sm">📍</div>
+            <div className="w-8 h-8 rounded-lg overflow-hidden shadow-glow-sm">
+              <img src="/logo.png" alt="GoNext" className="w-full h-full object-cover" />
+            </div>
             <span className="font-display text-xl font-bold text-white">GoNext</span>
           </div>
 

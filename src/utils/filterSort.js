@@ -1,4 +1,3 @@
-// Pure filtering + sorting logic — no API calls, just client-side processing.
 export function filterAndSort(places, filters) {
   let result = [...places];
 
@@ -15,6 +14,23 @@ export function filterAndSort(places, filters) {
   // Filter: Max Distance
   if (filters.maxDistance) {
     result = result.filter((p) => p.distance <= filters.maxDistance);
+  }
+
+  // ✅ NEW: Filter by price range
+  if (filters.priceRange && filters.priceRange.length > 0) {
+    result = result.filter((p) => {
+      // Simulate price based on distance (closer = pricier)
+      const price = p.distance < 1000 ? 3 : p.distance < 3000 ? 2 : 1;
+      return filters.priceRange.includes(price);
+    });
+  }
+
+  // ✅ NEW: Filter by category
+  if (filters.category && filters.category !== 'all') {
+    result = result.filter((p) => {
+      const cat = p.category.toLowerCase();
+      return cat.includes(filters.category);
+    });
   }
 
   // Sort

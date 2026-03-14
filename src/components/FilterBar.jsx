@@ -1,5 +1,12 @@
 export default function FilterBar({ filters, onChange }) {
-  const reset = () => onChange({ maxDistance: 3000, minRating: 0, openNow: false, sortBy: 'distance' });
+  const reset = () => onChange({ 
+    maxDistance: 3000, 
+    minRating: 0, 
+    openNow: false, 
+    sortBy: 'distance',
+    priceRange: [1, 3], // ✅ NEW
+    category: 'all' // ✅ NEW
+  });
 
   return (
     <div className="rounded-2xl bg-surface-700 border border-surface-400/30 p-4 flex flex-col gap-4 animate-slide-up">
@@ -15,7 +22,7 @@ export default function FilterBar({ filters, onChange }) {
         </button>
       </div>
 
-      {/* Distance - UPDATED MAX TO 20000 (20km) */}
+      {/* Distance */}
       <div className="flex flex-col gap-2">
         <div className="flex justify-between items-center">
           <label className="text-xs text-slate-400">📏 Max Distance</label>
@@ -45,6 +52,51 @@ export default function FilterBar({ filters, onChange }) {
           onChange={(e) => onChange({ ...filters, minRating: Number(e.target.value) })}
           className="w-full h-1 bg-surface-400 rounded-full appearance-none cursor-pointer accent-brand-500"
         />
+      </div>
+
+      {/* ✅ NEW: Price Range */}
+      <div className="flex flex-col gap-2">
+        <label className="text-xs text-slate-400">💰 Price Range</label>
+        <div className="flex gap-2">
+          {[1, 2, 3].map(price => (
+            <button
+              key={price}
+              onClick={() => {
+                const current = filters.priceRange || [1, 3];
+                if (current.includes(price)) {
+                  const updated = current.filter(p => p !== price);
+                  if (updated.length > 0) onChange({ ...filters, priceRange: updated });
+                } else {
+                  onChange({ ...filters, priceRange: [...current, price].sort() });
+                }
+              }}
+              className={`flex-1 py-2 rounded-lg text-xs font-bold transition-all border ${
+                (filters.priceRange || [1, 2, 3]).includes(price)
+                  ? 'bg-emerald-600/20 border-emerald-500/40 text-emerald-400'
+                  : 'bg-surface-600/50 border-surface-300/20 text-slate-600'
+              }`}
+            >
+              {'$'.repeat(price)}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* ✅ NEW: Category Filter (optional, since mood already filters) */}
+      <div className="flex flex-col gap-2">
+        <label className="text-xs text-slate-400">🏷️ Category</label>
+        <select
+          value={filters.category || 'all'}
+          onChange={(e) => onChange({ ...filters, category: e.target.value })}
+          className="w-full bg-surface-600 border border-surface-400/50 rounded-xl text-sm text-slate-300 px-3 py-2 cursor-pointer focus:outline-none focus:border-brand-500 transition-colors"
+        >
+          <option value="all">All Types</option>
+          <option value="cafe">☕ Cafes</option>
+          <option value="restaurant">🍽️ Restaurants</option>
+          <option value="fast_food">🍔 Fast Food</option>
+          <option value="park">🌳 Parks</option>
+          <option value="attraction">🎡 Attractions</option>
+        </select>
       </div>
 
       {/* Open Now */}
